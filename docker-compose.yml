@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - "9091:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./htpasswd:/etc/nginx/htpasswd
+    environment:
+      - DEFAULT_HOST=whoami.local
+
+  whoami:
+    image: jwilder/whoami
+    environment:
+      - VIRTUAL_HOST=whoami.local
